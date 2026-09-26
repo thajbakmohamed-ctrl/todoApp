@@ -1,22 +1,23 @@
 package com.example.todoApp.model;
-import jakarta.persistence.*;
-import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.*;
+
+import java.time.LocalDate;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 @Entity
-@Table(name= "categories")
-public class Category {
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
-    @OneToMany(mappedBy = "category")
-    @JsonIgnore
-    private List<Item> items;
+    private LocalDate dueDate;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-
-    public Category() {
+    public Item() {
     }
 
     public Long getId() {
@@ -43,11 +44,20 @@ public class Category {
         this.description = description;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
+
